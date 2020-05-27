@@ -1,0 +1,9 @@
+[package]
+name = "uni_theo2_sort"
+version = "0.1.0"
+authors = ["imger"]
+edition = "2018"
+
+[dependencies]
+rand = "0.7.3"
+gnuplot = "0.0.36"

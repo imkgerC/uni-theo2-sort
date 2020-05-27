@@ -1,0 +1,5 @@
+{
+    "git.enabled": false,
+    "python.linting.enabled": false,
+    // "rust.target":"x86_64-pc-windows-msvc",
+}
