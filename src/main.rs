@@ -7,13 +7,12 @@ fn main() {
     // list lengths
     let sizes: [usize; 3] = [1000, 10_000, 100_000];
     let random_samples = 1;
-    let mut arr = vec![9, 8, 7, 6, 5, 4, 3, 2, 1];
-    radix_sort(&mut arr);
-    println!("{:?}", arr);
+    let mut sorts: Vec<(Box<dyn Fn(&mut [usize])>, String)> = vec![(Box::new(quick_sort), "bubble".to_owned())];
     for size in &sizes {
         let vals = (0..(*size)).map(|_| thread_rng().gen()).collect::<Vec<_>>();
-        println!("bubble: {}", measure(&vals, &mut bubble_sort));
-        println!("insertion: {}", measure(&vals, &mut insertion_sort));
+        for (sort, name) in &mut sorts {
+            println!("{} {} {}", name, size, measure(&vals, sort));
+        }
     }
 }
 
@@ -264,11 +263,11 @@ fn insertion_sort(arr: &mut [usize]) {
     }
 }
 
-fn measure(arr: &Vec<usize>, sort: &mut FnMut(&mut [usize])) -> u128 {
+fn measure(arr: &Vec<usize>, sort: &mut Box<dyn Fn(&mut [usize])>) -> u128 {
     let mut arr = arr.clone();
     let now = Instant::now();
-    sort(&mut arr);
-    now.elapsed().as_nanos()
+    sort.as_ref()(&mut arr);
+    now.elapsed().as_micros()
 }
 
 fn invert(arr: &mut [usize]) {
