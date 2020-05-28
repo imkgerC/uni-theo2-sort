@@ -8,7 +8,7 @@ fn main() {
     let sizes: [usize; 3] = [1000, 10_000, 100_000];
     let random_samples = 1;
     let mut arr = vec![9, 8, 7, 6, 5, 4, 3, 2, 1];
-    merge_sort(&mut arr);
+    radix_sort(&mut arr);
     println!("{:?}", arr);
     for size in &sizes {
         let vals = (0..(*size)).map(|_| thread_rng().gen()).collect::<Vec<_>>();
@@ -59,6 +59,39 @@ fn merge(arr: &mut Vec<usize>, b: usize, m:usize, e:usize) {
         else {
             arr[k] = left.pop().unwrap();
         }
+    }
+}
+
+fn radix_sort(arr: &mut [usize]) {
+    let mut max = 0;
+    for i in 0..arr.len() {
+        if arr[i] > max {
+            max = arr[i];
+        }
+    }
+    let bits = 64 - max.leading_zeros();
+    for i in 0..bits {
+        let mut ones: Vec<usize> = Vec::with_capacity(arr.len());
+        let mut zeros: Vec<usize> = Vec::with_capacity(arr.len());
+        
+        for j in 0..arr.len() {
+            if (arr[j] & (1 << i)) > 0 {
+                ones.push(arr[j]);
+            } else {
+                zeros.push(arr[j]);
+            }
+        }
+        
+        let mut j = 0;
+        for x in zeros {
+            arr[j] = x;
+            j += 1;
+        }
+        for x in ones {
+            arr[j] = x;
+            j += 1;
+        }
+        assert!(j == arr.len());
     }
 }
 
