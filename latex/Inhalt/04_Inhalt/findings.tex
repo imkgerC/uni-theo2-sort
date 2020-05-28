@@ -1,0 +1,23 @@
+\chapter{Ergebnisse}
+Die Messungen mit zufällig sortierten Zahlen wurden 10 Mal wiederholt.
+
+\begin{table}[!ht]
+\begin{tabular}{l|ccc|ccc|ccc}
+    Name & \multicolumn{3}{c}{Sortiert} & \multicolumn{3}{c}{Invers} & \multicolumn{3}{c}{Zufällig} \\
+    \hline
+     & 1e3 & 1e4 & 1e5 & 1e3 & 1e4 & 1e5 & 1e3 & 1e4 & 1e5 \\
+    \hline
+    Bubble     & 0,4 & 44,5 & 3561 & 0,7 & 61,2 & 5871 & 0,7 & 135 & 16204 \\
+    Merge      & 0,4 & 2,4 & 17,6 & 0,2 & 1,8 & 16,6 & 0,2 & 2,6 & 22,3 \\
+    Heap       & 0,1 & 0,6 & 7,4 & 0,1 & 0,7 & 8,8 & 0,1 & 1,1 & 11,8 \\
+    Shaker     & 0,0 & 0,0 & 0,1 & 1,2 & 124 & 11661 & 0,8 & 129 & 12480 \\
+    Radix      & 0,1 & 1,2 & 6,2 & 0,1 & 1,4 & 5,9 & 0,4 & 5,5 & 65,9 \\
+    Selection  & 0,1 & 14,8 & 1513 & 0,2 & 15,2 & 1560 & 0,2 & 15,4 & 1541 \\
+    Insertion  & 0,0 & 0,0 & 0,3 & 0,7 & 69,9 & 6783 & 0,5 & 38,4 & 3343 \\
+    Shell      & 0,0 & 0,1 & 1,3 & 0,0 & 0,3 & 2,3 & 0,1 & 0,8 & 11,1 \\
+    Quick      & 0,0 & 0,1 & 1,5 & 0,0 & 0,1 & 1,8 & 0,1 & 0,6 & 6,8 \\
+\end{tabular}
+\centering
+\caption{Benötigte Zeit[ms] beim Sortieren}
+\end{table}
+\FloatBarrier
