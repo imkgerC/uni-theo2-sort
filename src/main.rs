@@ -7,8 +7,8 @@ fn main() {
     // list lengths
     let sizes: [usize; 3] = [1000, 10_000, 100_000];
     let random_samples = 1;
-    let mut arr = [9, 8, 7, 6, 5, 4, 3, 2, 1];
-    heap_sort(&mut arr);
+    let mut arr = vec![9, 8, 7, 6, 5, 4, 3, 2, 1];
+    merge_sort(&mut arr);
     println!("{:?}", arr);
     for size in &sizes {
         let vals = (0..(*size)).map(|_| thread_rng().gen()).collect::<Vec<_>>();
@@ -24,6 +24,62 @@ fn bubble_sort(arr: &mut [usize]) {
                 arr.swap(i - 1, i);
             }
         }
+    }
+}
+
+fn merge_sort(arr: &mut Vec<usize>) {
+    mergesort(arr, 0, arr.len()-1)
+}
+
+pub fn mergesort(arr: &mut Vec<usize>, b: usize, e: usize) {
+    if b < e {
+        let m = (b+e)/2;
+        mergesort(arr, b, m);
+        mergesort(arr, m+1, e);
+        merge(arr, b, m, e);
+    }
+}
+fn merge(arr: &mut Vec<usize>, b: usize, m:usize, e:usize) {
+    let mut left = arr[b..m+1].to_vec();
+    let mut right = arr[m+1..e+1].to_vec();
+    left.reverse();
+    right.reverse();
+    for k in b..e + 1 {
+        if left.is_empty() {
+            arr[k] = right.pop().unwrap();
+            continue;
+        }
+        if right.is_empty() {
+            arr[k] = left.pop().unwrap();
+            continue;
+        }
+        if right.last() < left.last() {
+            arr[k] = right.pop().unwrap();
+        }
+        else {
+            arr[k] = left.pop().unwrap();
+        }
+    }
+}
+
+fn counting_sort(arr: &mut [usize]) {
+    let mut max = 0;
+    for i in 0..arr.len() {
+        if arr[i] > max {
+            max = arr[i];
+        }
+    }
+    let mut buckets = (0..max).map(|_| 0).collect::<Vec<_>>();
+    for i in 0..arr.len() {
+        buckets[arr[i] - 1] += 1;
+    }
+    let mut i = 0;
+    for j in 0..arr.len() {
+        while buckets[i] == 0 {
+            i += 1;
+        }
+        buckets[i] -= 1;
+        arr[j] = i+1;
     }
 }
 
